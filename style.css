@@ -1,0 +1,496 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+/* --- Variables de Couleur (MODIFIÉES) --- */
+:root {
+    --bg-color: #000000; /* Fond noir */
+    --text-color: #ffffff; /* Texte blanc */
+    --main-color: #b74b4b; /* Votre rouge principal */
+    
+    /* MODIFIÉ: Variables pour les cartes de compétences (Dark Mode) */
+    --card-bg-color: #1a1a1a;    /* Fond de carte (gris très foncé) */
+    --card-text-color: #f0f0f0;  /* Texte principal (blanc cassé) */
+    --card-subtle-text: #aaa; /* Texte secondaire (noms des skills) */
+    --card-subtle-bg: #333;    /* Fond barre/boîte % (gris moyen) */
+    --card-border-color: #333; /* Bordure de la carte */
+}
+
+/* --- Réinitialisation et Base (Votre code - INCHANGÉ) --- */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+html{
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body{
+    width: 100%;
+    overflow-x: hidden;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+section{
+    min-height: 100vh;
+    padding: 5rem 9% 5rem;
+}
+
+/* --- Header (Votre code - INCHANGÉ) --- */
+header{
+    margin-top: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 9%;
+    background-color: transparent;
+    filter: drop-shadow(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo{
+    font-size: 3rem;
+    color: var(--main-color);
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.logo:hover{
+    transform: scale(1.1);
+}
+
+nav a{
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-left: 4rem;
+    font-weight: 500;
+    transition: 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+nav a:hover,
+nav a.active{
+    color: var(--main-color);
+    border-bottom: 3px solid var(--main-color);
+}
+
+/* --- Section Accueil (Home) (Votre code - INCHANGÉ) --- */
+.home{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+    background-color: var(--bg-color); 
+    padding-top: 7rem; 
+}
+
+.home .home-content h1{
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+span{
+    color: var(--main-color);
+}
+
+.home-content h3{
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.home-content p{
+    font-size: 1.6rem;
+}
+
+.home-img{
+    border-radius: 50%;
+}
+
+.home-img img{
+    position: relative;
+    width: 32vw;
+    border-radius: 50%;
+    box-shadow: 0 0 25px var(--main-color);
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+
+.home-img img:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 35px var(--main-color);
+}
+
+.social-icons a{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    background-color: transparent;
+    border: 0.2rem solid var(--main-color);
+    font-size: 2rem;
+    border-radius: 50%;
+    margin: 3rem 1.5rem 3rem 0;
+    transition: 0.3s ease;
+    color: var(--main-color);
+}
+
+.social-icons a:hover{
+    color: var(--bg-color);
+    transform: scale(1.3) translateY(-5px);
+    background-color: var(--main-color);
+    box-shadow: 0 0 25px var(--main-color);
+}
+
+.btn{
+    display: inline-block;
+    padding: 1rem 2.8rem;
+    background-color: var(--bg-color);
+    border-radius: 4rem;
+    font-size: 1.6rem;
+    color: var(--main-color);
+    letter-spacing: 0.3rem;
+    font-weight: 600;
+    border: 2px solid var(--main-color);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.btn:hover{
+    transform: scale(1.03); 
+    background-color: var(--main-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 25px var(--main-color);
+}
+
+/* --- Animation Texte (Votre code - INCHANGÉ) --- */
+.typing-text{
+    font-size: 3.4rem; /* 34px */
+    font-weight: 600;
+    min-width: 280px;
+}
+
+.typing-text span{
+    position: relative;
+}
+
+.typing-text span::before{
+    content: "software Developer";
+    color: var(--main-color);
+    animation: words 20s infinite;
+}
+
+.typing-text span::after{
+    content: "";
+    background-color: var(--bg-color);
+    position: absolute;
+    width: calc(100% + 8px);
+    height: 100%;
+    border-left: 3px solid var(--bg-color);
+    right: -8px; 
+    animation: cursor 0.6s infinite, typing 20s steps(15) infinite;
+}
+
+@keyframes cursor{
+    to{
+        border-left: 3px solid var(--main-color);
+    }
+}
+
+@keyframes words{
+    0%, 20%{
+        content: "Web Developer";
+    }
+    21%, 40%{
+        content: "Mobile Developer";
+    }
+    41%, 60%{
+        content: "Web Designer";
+    }
+    61%, 80% {
+        content: "Software Engineer";
+    }
+    81%, 100% {
+        content: "Full Stack Developer";
+    }
+}
+
+@keyframes typing {
+    10%, 15%, 30%, 35%, 50%, 55%, 70%, 75%, 90%, 95% {
+        width: calc(100% + 8px);
+    }
+    5%, 20%, 25%, 40%, 45%, 60%, 65%, 80%, 85% {
+        width: 0;
+    }
+}
+
+
+/* --- Responsive (Votre code - INCHANGÉ) --- */
+/* AJOUT: Icône du menu mobile */
+#menu-toggle {
+    display: none;
+    font-size: 3rem;
+    color: var(--text-color);
+    cursor: pointer;
+    z-index: 1001; /* S'assurer qu'il est au-dessus de la nav */
+}
+
+@media(max-width:995px){
+    /* AFFICHE L'ICÔNE HAMBURGER */
+    #menu-toggle {
+        display: block;
+    }
+    
+    /* MODIFIÉ: pour l'animation de glissement */
+    nav{
+        position: absolute;
+        top: 100%; 
+        right: -100%; /* Commence en dehors de l'écran */
+        width: 40%;
+        border-left: 3px solid var(--main-color);
+        border-bottom: 3px solid var(--main-color);
+        border-bottom-left-radius: 2rem;
+        padding: 1rem;
+        background-color: #161616;
+        border-top: 0.1rem solid rgba(0,0,0,0.1);
+        display: none; /* Gardé pour la logique JS simple */
+        transition: right 0.3s ease-in-out; 
+    }
+
+    nav.active{
+        display: block;
+        right: 0; /* Glisse vers l'intérieur */
+    }
+
+    nav a{
+        display: block;
+        font-size: 2rem;
+        margin: 3rem 0;
+        text-align: center;
+    }
+
+    nav a:hover,
+    nav a.active{
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border-bottom: 0.5rem solid var(--main-color);
+    }
+    
+    .home{
+        flex-direction: column;
+        margin: 5rem 0rem;
+        text-align: center;
+    }
+
+    .home .home-content h3{
+        font-size: 2.5rem;
+    }
+
+    .home-content h1{
+        font-size: 5rem;
+    }
+
+    .home-img img{
+        width: 70vw;
+        margin-top: 4rem;
+    }
+}
+
+@media (max-width: 1000px){
+    .home{
+        gap: 4rem;
+    }
+}
+
+/* =======================================================
+--- Section Compétences (Skills) (ENTIÈREMENT MODIFIÉE) ---
+=======================================================
+*/
+.skills-section {
+    min-height: 100vh;
+    padding: 7rem 5% 2rem;
+    background-color: var(--bg-color);
+    background-image: url('gear-bg.png'); /* Assurez-vous d'avoir cette image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
+}
+
+.section-title {
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.section-title span {
+    color: var(--main-color);
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 3rem;
+    color: #ccc;
+    letter-spacing: 1px;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem; /* Un peu plus d'espace */
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 🎨 INTERACTIF: La carte elle-même */
+.skill-category-card {
+    /* MODIFIÉ: Augmente le padding interne pour un look plus aéré */
+    padding: 2.5rem 3rem; 
+    background-color: var(--card-bg-color); 
+    color: var(--card-text-color);         
+    border-radius: 10px; 
+    border: 1px solid var(--card-border-color); 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; 
+}
+
+/* 🎨 INTERACTIF: Effet de survol */
+.skill-category-card:hover {
+    transform: translateY(-10px); /* Soulève la carte */
+    border-color: var(--main-color); /* La bordure devient rouge */
+    /* Ombre rouge brillante */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(183, 75, 75, 0.5); 
+}
+
+.skill-category-title {
+    font-size: 1.6rem; /* Un peu plus grand */
+    font-weight: 600;
+    color: var(--main-color); /* Titre en ROUGE */
+    margin-bottom: 2rem; /* Plus d'espace */
+    text-align: center;
+    border-bottom: 1px solid var(--card-border-color); /* Ligne de séparation */
+    padding-bottom: 1rem;
+}
+
+.skill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espace entre les skills */
+}
+
+/* 🎨 ATRACTIF: Animation d'entrée (gérée par JS) */
+.skill-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    /* Styles de départ pour l'animation */
+    opacity: 0; 
+    transform: translateX(-20px);
+    /* L'animation elle-même */
+    transition: opacity 0.5s ease-out 0.2s, transform 0.5s ease-out 0.2s;
+}
+
+/* Classe à ajouter par JS lorsque l'élément est visible */
+.skill-item.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.skill-info {
+    display: flex;
+    align-items: center;
+    flex-basis: 150px; 
+    min-width: 150px;
+    gap: 1rem; /* Espace entre icône et nom */
+}
+
+/* 🎨 ATRACTIF: Icônes */
+.skill-info img {
+    width: 24px; /* Un peu plus grandes */
+    height: 24px;
+    transition: transform 0.3s ease;
+    /* Filtre pour que les logos s'intègrent mieux au thème sombre */
+    filter: brightness(0.9) grayscale(0.2);
+}
+
+.skill-info i {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    text-align: center;
+    color: var(--main-color); /* Icônes FontAwesome en rouge */
+    transition: transform 0.3s ease;
+}
+
+/* 🎨 INTERACTIF: Zoom sur icône au survol de la ligne */
+.skill-item:hover .skill-info img,
+.skill-item:hover .skill-info i {
+    transform: scale(1.2);
+    filter: none; /* Enlève le filtre au survol */
+}
+
+.skill-name {
+    font-size: 1rem; /* Plus lisible */
+    font-weight: 500;
+    color: var(--card-subtle-text);
+    white-space: nowrap;
+}
+
+.skill-bar-container {
+    flex: 1;
+    height: 10px; /* Plus épais */
+    background-color: var(--card-subtle-bg);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.skill-bar {
+    height: 100%;
+    background-color: var(--main-color);
+    width: 0%; /* Commence à 0 pour l'animation JS */
+    border-radius: 5px;
+    /* 🎨 Animation CSS de la barre */
+    transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.skill-percentage-box {
+    background-color: var(--card-subtle-bg);
+    padding: 4px 8px; /* Plus aéré */
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--card-text-color);
+    min-width: 45px; /* min-width pour éviter le décalage */
+    text-align: center;
+}
+
+/* --- Responsive (Skills) --- */
+@media (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: 1fr; /* Toujours une colonne pour les petits écrans */
+    }
+    
+    .skill-info {
+        flex-basis: 120px;
+        min-width: 120px;
+    }
+
+    .skill-category-card {
+        padding: 2rem; /* Légèrement moins de padding sur mobile */
+    }
+}
