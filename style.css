@@ -2,16 +2,15 @@
 
 /* --- Variables de Couleur (MODIFIÉES) --- */
 :root {
-    --bg-color: #000000; /* Fond noir */
+    --bg-color: #000000; /* Fond noir par défaut (pour le texte et les éléments sombres) */
     --text-color: #ffffff; /* Texte blanc */
     --main-color: #b74b4b; /* Votre rouge principal */
     
-    /* MODIFIÉ: Variables pour les cartes de compétences (Dark Mode) */
-    --card-bg-color: #1a1a1a;    /* Fond de carte (gris très foncé) */
-    --card-text-color: #f0f0f0;  /* Texte principal (blanc cassé) */
-    --card-subtle-text: #aaa; /* Texte secondaire (noms des skills) */
-    --card-subtle-bg: #333;    /* Fond barre/boîte % (gris moyen) */
-    --card-border-color: #333; /* Bordure de la carte */
+    --card-bg-color: #1a1a1a; 
+    --card-text-color: #f0f0f0; 
+    --card-subtle-text: #aaa; 
+    --card-subtle-bg: #333; 
+    --card-border-color: #333; 
 }
 
 /* --- Réinitialisation et Base (Votre code - INCHANGÉ) --- */
@@ -33,8 +32,26 @@ html{
 body{
     width: 100%;
     overflow-x: hidden;
-    background-color: var(--bg-color);
     color: var(--text-color);
+
+    /* --- NOUVEL ARRIÈRE-PLAN GLOBAL --- */
+    /* 1. Un filtre sombre puis votre image */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('background.jpg');
+    
+    /* 2. L'image couvre tout l'écran, peut être recadrée mais pas d'espaces vides */
+    background-size: cover; 
+    
+    /* 3. Ne répète pas l'image */
+    background-repeat: no-repeat;
+    
+    /* 4. Centre l'image */
+    background-position: center center;
+    
+    /* 5. Fixe l'image pour qu'elle ne défile pas avec le contenu */
+    background-attachment: fixed; 
+    
+    /* 6. La couleur de secours n'est plus visible avec 'cover', mais elle est maintenue */
+    background-color: #0d0d0d; 
 }
 
 section{
@@ -91,7 +108,10 @@ nav a.active{
     justify-content: center;
     align-items: center;
     gap: 8rem;
-    background-color: var(--bg-color); 
+    
+    /* Rendu transparent pour voir le fond du body */
+    background-color: transparent; 
+    
     padding-top: 7rem; 
 }
 
@@ -176,11 +196,15 @@ span{
     box-shadow: 0 0 25px var(--main-color);
 }
 
-/* --- Animation Texte (Votre code - INCHANGÉ) --- */
+/* --- Animation Texte (Corrigé pour la Stabilité et la Synchronisation) --- */
 .typing-text{
     font-size: 3.4rem; /* 34px */
     font-weight: 600;
     min-width: 280px;
+
+    /* CORRECTION STABILITÉ: Empêche le "sautillement" de la page */
+    min-height: 4.5rem; 
+    display: block; 
 }
 
 .typing-text span{
@@ -188,54 +212,99 @@ span{
 }
 
 .typing-text span::before{
-    content: "software Developer";
-    color: var(--main-color);
+    content: "Web Developer"; /* Texte de départ */
+    color: #b74b4b;
+    /* CORRECTION SYNCHRO: L'animation 'words' est modifiée */
     animation: words 20s infinite;
 }
 
 .typing-text span::after{
     content: "";
-    background-color: var(--bg-color);
+    
+    /* MODIFIÉ: Le fond n'est plus 'black' */
+    /* Il copie le fond du 'body' pour se camoufler */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('background.jpg');
+    background-size: cover; 
+    background-position: center center;
+    background-attachment: fixed; 
+    background-color: #0d0d0d; /* Couleur de secours du body */
+
     position: absolute;
     width: calc(100% + 8px);
     height: 100%;
-    border-left: 3px solid var(--bg-color);
+
+    /* MODIFIÉ: Le curseur est rouge par défaut (comme sur votre image) */
+    border-left: 3px solid #b74b4b;
+    
+    /* CORRIGÉ: Ajout de 'px' */
     right: -8px; 
+    
     animation: cursor 0.6s infinite, typing 20s steps(15) infinite;
 }
 
+/* CORRECTION 1: Le @keyframe 'cursor' en double a été supprimé */
 @keyframes cursor{
-    to{
-        border-left: 3px solid var(--main-color);
+    /* MODIFIÉ: Fait clignoter le curseur en le rendant transparent */
+    50% {
+        border-left-color: transparent;
     }
 }
 
+/* @keyframes cursor{...} -> L'ancien a été supprimé */
+
+
+/* CORRECTION SYNCHRO: Les mots changent PENDANT que le rideau est fermé */
 @keyframes words{
-    0%, 20%{
-        content: "Web Developer";
-    }
-    21%, 40%{
-        content: "Mobile Developer";
-    }
-    41%, 60%{
-        content: "Web Designer";
-    }
-    61%, 80% {
-        content: "Software Engineer";
-    }
-    81%, 100% {
-        content: "Full Stack Developer";
-    }
+    /* Le rideau est fermé de 0% à 5% */
+    0%   { content: "Web Developer"; }
+    19%  { content: "Web Developer"; }
+    /* Le rideau est fermé de 20% à 25% */
+    20%  { content: "Mobile Developer"; }
+    39%  { content: "Mobile Developer"; }
+    /* Le rideau est fermé de 40% à 45% */
+    40%  { content: "Web Designer"; }
+    59%  { content: "Web Designer"; }
+    /* Le rideau est fermé de 60% à 65% */
+    60%  { content: "Web Developer"; }
+    79%  { content: "Web Developer"; }
+    /* Le rideau est fermé de 80% à 85% */
+    80%  { content: "Mobile Developer"; }
+    100% { content: "Mobile Developer"; }
 }
 
+/* CORRECTION SYNCHRO: Un cycle propre de "taper, pauser, effacer, pauser" */
 @keyframes typing {
-    10%, 15%, 30%, 35%, 50%, 55%, 70%, 75%, 90%, 95% {
-        width: calc(100% + 8px);
-    }
-    5%, 20%, 25%, 40%, 45%, 60%, 65%, 80%, 85% {
-        width: 0;
-    }
+    /* Cycle 1 (0-20%) */
+    0%   { width: calc(100% + 8px); } /* 1. Masqué (début) */
+    5%   { width: 0; }               /* 2. Révélé (tape) */
+    15%  { width: 0; }               /* 3. Pause (visible) */
+    20%  { width: calc(100% + 8px); } /* 4. Masqué (effacé) */
+
+    /* Cycle 2 (20-40%) */
+    20%  { width: calc(100% + 8px); } /* 1. Masqué (le mot change ici) */
+    25%  { width: 0; }               /* 2. Révélé (tape) */
+    35%  { width: 0; }               /* 3. Pause (visible) */
+    40%  { width: calc(100% + 8px); } /* 4. Masqué (effacé) */
+
+    /* Cycle 3 (40-60%) */
+    40%  { width: calc(100% + 8px); }
+    45%  { width: 0; }
+    55%  { width: 0; }
+    60%  { width: calc(100% + 8px); }
+
+    /* Cycle 4 (60-80%) */
+    60%  { width: calc(100% + 8px); }
+    65%  { width: 0; }
+    75%  { width: 0; }
+    80%  { width: calc(100% + 8px); }
+
+    /* Cycle 5 (80-100%) */
+    80%  { width: calc(100% + 8px); }
+    85%  { width: 0; }
+    95%  { width: 0; }
+    100% { width: calc(100% + 8px); }
 }
+
 
 
 /* --- Responsive (Votre code - INCHANGÉ) --- */
@@ -316,17 +385,32 @@ span{
 }
 
 /* =======================================================
---- Section Compétences (Skills) (ENTIÈREMENT MODIFIÉE) ---
+--- Section Compétences (Skills) (CORRIGÉE) ---
 =======================================================
 */
 .skills-section {
     min-height: 100vh;
     padding: 7rem 5% 2rem;
-    background-color: var(--bg-color);
-    background-image: url('gear-bg.png'); /* Assurez-vous d'avoir cette image */
-    background-size: cover;
+    
+    /* Rendu transparent pour voir le fond du body */
+    background-color: transparent; 
+    
+    /* CORRECTION 3: Ajouté pour que l'image de fond soit visible */
+    background-image: none; 
+    
+    background-size: cover; 
     background-position: center;
     background-attachment: fixed; 
+}
+
+/* Zoom section My Skills : titres plus grands */
+.skills-section .section-title {
+    font-size: 4.2rem;
+}
+
+.skills-section .section-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 3.5rem;
 }
 
 .section-title {
@@ -351,19 +435,18 @@ span{
 
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2.5rem; /* Un peu plus d'espace */
-    max-width: 1400px;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 3rem; 
+    max-width: 1600px;
     margin: 0 auto;
 }
 
-/* 🎨 INTERACTIF: La carte elle-même */
+/* 🎨 INTERACTIF: La carte elle-même (zoomée) */
 .skill-category-card {
-    /* MODIFIÉ: Augmente le padding interne pour un look plus aéré */
-    padding: 2.5rem 3rem; 
+    padding: 3rem 3.5rem; 
     background-color: var(--card-bg-color); 
     color: var(--card-text-color);         
-    border-radius: 10px; 
+    border-radius: 12px; 
     border: 1px solid var(--card-border-color); 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; 
@@ -378,26 +461,26 @@ span{
 }
 
 .skill-category-title {
-    font-size: 1.6rem; /* Un peu plus grand */
+    font-size: 2rem; 
     font-weight: 600;
     color: var(--main-color); /* Titre en ROUGE */
-    margin-bottom: 2rem; /* Plus d'espace */
+    margin-bottom: 2.5rem;
     text-align: center;
     border-bottom: 1px solid var(--card-border-color); /* Ligne de séparation */
-    padding-bottom: 1rem;
+    padding-bottom: 1.2rem;
 }
 
 .skill-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem; /* Espace entre les skills */
+    gap: 2rem; /* Espace entre les skills */
 }
 
 /* 🎨 ATRACTIF: Animation d'entrée (gérée par JS) */
 .skill-item {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.3rem;
     /* Styles de départ pour l'animation */
     opacity: 0; 
     transform: translateX(-20px);
@@ -414,24 +497,24 @@ span{
 .skill-info {
     display: flex;
     align-items: center;
-    flex-basis: 150px; 
-    min-width: 150px;
-    gap: 1rem; /* Espace entre icône et nom */
+    flex-basis: 180px; 
+    min-width: 180px;
+    gap: 1.2rem; /* Espace entre icône et nom */
 }
 
-/* 🎨 ATRACTIF: Icônes */
+/* 🎨 ATRACTIF: Icônes (zoomées) */
 .skill-info img {
-    width: 24px; /* Un peu plus grandes */
-    height: 24px;
+    width: 32px;
+    height: 32px;
     transition: transform 0.3s ease;
     /* Filtre pour que les logos s'intègrent mieux au thème sombre */
     filter: brightness(0.9) grayscale(0.2);
 }
 
 .skill-info i {
-    width: 24px;
-    height: 24px;
-    font-size: 24px;
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
     text-align: center;
     color: var(--main-color); /* Icônes FontAwesome en rouge */
     transition: transform 0.3s ease;
@@ -445,7 +528,7 @@ span{
 }
 
 .skill-name {
-    font-size: 1rem; /* Plus lisible */
+    font-size: 1.2rem;
     font-weight: 500;
     color: var(--card-subtle-text);
     white-space: nowrap;
@@ -453,9 +536,9 @@ span{
 
 .skill-bar-container {
     flex: 1;
-    height: 10px; /* Plus épais */
+    height: 14px;
     background-color: var(--card-subtle-bg);
-    border-radius: 5px;
+    border-radius: 7px;
     overflow: hidden;
 }
 
@@ -463,19 +546,19 @@ span{
     height: 100%;
     background-color: var(--main-color);
     width: 0%; /* Commence à 0 pour l'animation JS */
-    border-radius: 5px;
+    border-radius: 7px;
     /* 🎨 Animation CSS de la barre */
     transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .skill-percentage-box {
     background-color: var(--card-subtle-bg);
-    padding: 4px 8px; /* Plus aéré */
-    border-radius: 5px;
-    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-radius: 7px;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--card-text-color);
-    min-width: 45px; /* min-width pour éviter le décalage */
+    min-width: 52px;
     text-align: center;
 }
 
@@ -486,11 +569,361 @@ span{
     }
     
     .skill-info {
-        flex-basis: 120px;
-        min-width: 120px;
+        flex-basis: 140px;
+        min-width: 140px;
     }
 
     .skill-category-card {
-        padding: 2rem; /* Légèrement moins de padding sur mobile */
+        padding: 2.2rem; /* Légèrement moins de padding sur mobile */
+    }
+
+    .skills-section .section-title {
+        font-size: 3.2rem;
+    }
+
+    .skills-section .section-subtitle {
+        font-size: 1.2rem;
+    }
+} /* <-- CORRECTION 4: Fermeture du @media (max-width: 768px) qui était mal placé */
+
+/* =======================================================
+--- NOUVELLE SECTION: Projets (Projects) ---
+=======================================================
+*/
+.projects-section {
+    min-height: 100vh;
+    padding: 7rem 5% 2rem;
+    
+    /* MODIFIÉ : Assure la transparence pour le fond global */
+    background-color: transparent; 
+    background-image: none; 
+}
+
+.projects-grid {
+    display: grid;
+    /* Crée une grille réactive. Vise 5 colonnes sur de grands écrans */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    max-width: 1800px; /* Permet à 5 colonnes de s'afficher plus facilement */
+    margin: 0 auto;
+}
+
+.project-card {
+    background-color: var(--card-bg-color);
+    color: var(--card-text-color);
+    border-radius: 10px;
+    border: 1px solid var(--card-border-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    
+    /* Permet au pied de page de rester en bas */
+    display: flex;
+    flex-direction: column; 
+    
+    overflow: hidden; /* Pour les coins arrondis du header */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Applique le même effet de survol que les cartes de compétences */
+.project-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--main-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(183, 75, 75, 0.5);
+}
+
+.project-header {
+    background-color: var(--main-color);
+    padding: 1rem 1.5rem;
+    text-align: center;
+}
+
+.project-header h3 {
+    color: var(--text-color); /* Texte blanc sur fond rouge */
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.project-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Force le corps à prendre l'espace disponible */
+}
+
+.project-image {
+    width: 100%;
+    height: 150px; /* Hauteur fixe pour toutes les images */
+    margin-bottom: 1.5rem;
+    border-radius: 5px;
+    background-color: var(--card-subtle-bg); /* Fond pour les images transparentes */
+    overflow: hidden;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 'contain' est mieux pour les logos/illustrations */
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.05); /* Léger zoom sur l'image au survol */
+}
+
+.project-description {
+    font-size: 1.4rem;
+    color: var(--card-subtle-text);
+    line-height: 1.6;
+    flex-grow: 1; /* Pousse le .project-tech en bas du .project-body */
+}
+
+.project-tech {
+    font-size: 1.2rem;
+    color: var(--card-subtle-text);
+    margin-top: 1.5rem;
+    line-height: 1.5;
+}
+
+.project-tech p {
+    margin-bottom: 0.5rem;
+}
+
+.project-tech strong {
+    color: var(--card-text-color); /* "Tools:" en blanc cassé */
+    font-weight: 600;
+}
+
+.project-footer {
+    display: flex;
+    justify-content: flex-end; /* Aligne les icônes à droite */
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--card-border-color);
+}
+
+.project-link-btn {
+    font-size: 2.2rem; /* Icônes plus grandes */
+    color: var(--card-subtle-text);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.project-link-btn:hover {
+    color: var(--main-color); /* Devient rouge au survol */
+    transform: scale(1.1);
+}
+
+/* --- Responsive pour la grille des projets --- */
+@media (max-width: 1600px) {
+    .projects-grid {
+        /* Passe à 4 colonnes sur les écrans plus petits */
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-grid {
+        /* 1 colonne sur mobile */
+        grid-template-columns: 1fr;
+    }
+
+    .project-header h3 {
+        font-size: 1.4rem;
+    }
+
+    .project-description {
+        font-size: 1.3rem;
+    }
+}
+
+/* =======================================================
+--- Section Contact ---
+=======================================================
+*/
+.contact-section {
+    min-height: 100vh;
+    padding: 7rem 5% 2rem;
+    background-color: transparent;
+    background-image: none;
+}
+
+.contact-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+}
+
+.contact-info {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: 10px;
+    flex: 1;
+    min-width: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-8px);
+    border-color: var(--main-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(183, 75, 75, 0.3);
+}
+
+.contact-item i {
+    font-size: 2.5rem;
+    color: var(--main-color);
+    margin-top: 0.3rem;
+}
+
+.contact-item h3 {
+    font-size: 1.4rem;
+    color: var(--main-color);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.contact-item a,
+.contact-item p {
+    font-size: 1.4rem;
+    color: var(--card-text-color);
+    transition: color 0.3s ease;
+}
+
+.contact-item a:hover {
+    color: var(--main-color);
+}
+
+.contact-social {
+    text-align: center;
+    padding: 2rem;
+}
+
+.contact-social p {
+    font-size: 1.5rem;
+    color: var(--card-subtle-text);
+    margin-bottom: 1.5rem;
+}
+
+/* --- Formulaire de contact --- */
+.contact-form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form:hover {
+    border-color: var(--card-border-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.contact-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.contact-form .form-group {
+    margin-bottom: 2rem;
+}
+
+.contact-form label {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--main-color);
+    margin-bottom: 0.8rem;
+}
+
+.contact-form label i {
+    font-size: 1.4rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    font-size: 1.5rem;
+    color: var(--card-text-color);
+    background-color: var(--card-subtle-bg);
+    border: 1px solid var(--card-border-color);
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: var(--card-subtle-text);
+    opacity: 0.8;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--main-color);
+    box-shadow: 0 0 0 2px rgba(183, 75, 75, 0.2);
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+.contact-form-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.contact-form-btn i {
+    font-size: 1.4rem;
+}
+
+.contact-section .social-icons {
+    justify-content: center;
+}
+
+@media (max-width: 900px) {
+    .contact-info {
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact-form .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-item {
+        min-width: 100%;
+        max-width: 320px;
     }
 }

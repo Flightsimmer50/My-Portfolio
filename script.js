@@ -41,11 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (isNaN(target)) return; // Sécurité
 
                 // 1. Animer la largeur de la barre (via CSS transition)
-                // On ajoute un petit délai pour voir l'animation d'entrée d'abord
                 setTimeout(() => {
                     skillBar.style.width = target + "%";
                 }, 200); // 200ms après l'apparition
-                
                 
                 // 2. Animer le chiffre du pourcentage
                 let count = 0;
@@ -58,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }, 20); // Vitesse de comptage (20ms)
 
-                // 3. On arrête d'observer cet élément (l'animation ne se joue qu'une fois)
+                // 3. On arrête d'observer cet élément
                 observer.unobserve(item);
             }
         });
@@ -71,4 +69,48 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(item);
     });
 
+
+    /* === FORMULAIRE DE CONTACT 100% AUTOMATIQUE (EmailJS) === */
+    const publicKey = "ciX31CjqArFcOSfkb";      // ← Remplace par ta Public Key EmailJS
+    const serviceID = "service_ytw5b5f";      // ← Remplace par ton Service ID
+    const templateID = "template_egm5ku8";    // ← Remplace par ton Template ID
+
+    // Initialisation EmailJS
+    emailjs.init(publicKey);
+
+    const contactForm = document.getElementById("contact-form");
+    const statusDiv = document.getElementById("form-status");
+    const sendBtn = document.getElementById("send-btn");
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            // Animation bouton pendant l'envoi
+            sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            sendBtn.disabled = true;
+            statusDiv.innerHTML = "";
+
+            // Envoi via EmailJS
+            emailjs.sendForm(serviceID, templateID, this)
+                .then(() => {
+                    statusDiv.innerHTML = `
+                        <p style="color: #00ff88; text-align:center; margin-top:15px; font-weight:bold;">
+                            ✅ Message Sent Successfully ! Thank you for your message 🎉
+                        </p>`;
+                    contactForm.reset(); // Vide le formulaire
+                })
+                .catch((error) => {
+                    console.error("EmailJS error:", error);
+                    statusDiv.innerHTML = `
+                        <p style="color: #ff4444; text-align:center; margin-top:15px; font-weight:bold;">
+                            ❌ Error sending the message. Please try again later.
+                        </p>`;
+                })
+                .finally(() => {
+                    sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send';
+                    sendBtn.disabled = false;
+                });
+        });
+    }
 });
