@@ -112,5 +112,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     sendBtn.disabled = false;
                 });
         });
+        // ================= CV MODAL =================
+
+const cvBtn = document.getElementById("cv-btn");
+const cvModal = document.getElementById("cv-modal");
+const closeCv = document.querySelector(".cv-close");
+
+cvBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    cvModal.style.display = "flex";
+});
+
+closeCv.addEventListener("click", function() {
+    cvModal.style.display = "none";
+});
+
+window.addEventListener("click", function(e) {
+    if (e.target === cvModal) {
+        cvModal.style.display = "none";
+    }
+});
     }
 });

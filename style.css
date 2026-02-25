@@ -927,3 +927,58 @@ span{
         max-width: 320px;
     }
 }
+
+/* ================= CV MODAL ================= */
+
+.cv-modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.cv-modal-content {
+    background: #1e1e1e;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    width: 350px;
+    position: relative;
+}
+
+.cv-modal-content h2 {
+    margin-bottom: 20px;
+}
+
+.cv-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cv-option {
+    padding: 12px;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.cv-option:hover {
+    transform: scale(1.05);
+}
+
+.cv-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+}

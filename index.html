@@ -34,13 +34,21 @@
             <p>A computer engineer specializing in web and mobile development, I'm passionate about new
                 technologies and eager to join a team and contribute to exciting projects. Rigorous and dynamic, I'm
                 looking to expand my practical experience and to explore new opportunities</p>
-            <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="#"><i class="fa-brands fa-github"></i></a>
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            </div>
-            <a href="#" class="btn">Download CV</a>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/mohamed-maamoun-jrad-4a6787250/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Flightsimmer50" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://www.facebook.com/maamoun.jrad1" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/captain_maamoun/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+                <a href="#" class="btn" id="cv-btn">Download CV</a>
         </div>
     </section>
 
@@ -97,6 +105,16 @@
                         <div class="skill-info">
                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React Native">
                             <span class="skill-name">React Native</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" data-percentage="70"></div>
+                        </div>
+                        <span class="skill-percentage-box">0%</span>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg" alt=".NET">
+                            <span class="skill-name">.NET</span>
                         </div>
                         <div class="skill-bar-container">
                             <div class="skill-bar" data-percentage="70"></div>
@@ -283,15 +301,7 @@
                         </div>
                         <span class="skill-percentage-box">0%</span>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <i class="fas fa-wallet"></i> <span class="skill-name">Metamask</span>
-                        </div>
-                        <div class="skill-bar-container">
-                            <div class="skill-bar" data-percentage="60"></div>
-                        </div>
-                        <span class="skill-percentage-box">0%</span>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -651,12 +661,19 @@
                 <div class="contact-social">
                     <p>Follow me on social media</p>
                     <div class="social-icons">
-                        <a href="#" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-                        <a href="#" title="GitHub"><i class="fa-brands fa-github"></i></a>
-                        <a href="#" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="#" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/mohamed-maamoun-jrad-4a6787250/" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/Flightsimmer50" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                        <a href="https://www.facebook.com/maamoun.jrad1" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                        <a href="https://www.instagram.com/captain_maamoun/" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
                     </div>
-                </div>
             </div>
         </section>
     
@@ -666,6 +683,24 @@
         
         <!-- Ton script.js -->
         <script src="script.js" defer></script>
+
+        <!-- ================= CV LANGUAGE MODAL ================= -->
+        <div id="cv-modal" class="cv-modal">
+            <div class="cv-modal-content">
+              <span class="cv-close">&times;</span>
+              <h2>Select CV Language</h2>
+          
+              <div class="cv-buttons">
+                <a href="cv/CV_Mohamed_Maamoun_Jrad_FR.pdf" download="CV_Mohamed_Maamoun_Jrad_FR.pdf" class="cv-option">
+                  French Version
+                </a>
+          
+                <a href="cv/CV_Mohamed_Maamoun_Jrad_ENG.pdf" download="CV_Mohamed_Maamoun_Jrad_ENG.pdf" class="cv-option">
+                  English Version
+                </a>
+              </div>
+            </div>
+          </div>
     
     </body>
     </html>
